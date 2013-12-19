@@ -174,7 +174,7 @@ Boolean.isBoolean = function(v) {
 
 
 /**
- * STRING CONSTRUCTOR EXTENSIONS
+ * THE STRING
  */
 
 /**
