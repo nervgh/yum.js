@@ -15,12 +15,18 @@
  */
 
 /**
+ * Returns "true" if a value is NaN
+* @borrows global.isNaN as isNaN
+ */
+Number.isNaN = Number.isNaN || this.isNaN;
+
+/**
  * Returns "true" if a value is number
  * @param {*} v A value
  * @return {Boolean}
  */
 Number.isNumber = function(v) {
-    return typeof v === 'number' && !isNaN(v);
+    return typeof v === 'number' && !this.isNaN(v);
 };
 
 /**
@@ -28,7 +34,7 @@ Number.isNumber = function(v) {
  * @param {Number} n A number
  * @return {Boolean}
  */
-Number.isInteger = function(n) {
+Number.isInteger = Number.isInteger || function(n) {
     return (n | 0) === n;
 };
 
@@ -249,39 +255,32 @@ Array.isArray = Array.isArray || function(v) {
 
 
 /**
- * THE NULL (global object)
+ * FUNCTIONS
  */
-this.Null = {
-    /**
-     * Returns "true" if a value is null
-     * @param {*} v A value
-     * @returns {Boolean}
-     */
-    isNull: function(v) {
-        return v === null;
-    }
-};
-
-
 
 /**
- * THE UNDEFINED (global object)
+ * Returns "true" if a value is null
+ * @param {*} v A value
+ * @returns {Boolean}
  */
-this.Undefined = {
-    /**
-     * Returns "true" if a value is undefined
-     * @param {*} v A value
-     * @returns {Boolean}
-     */
-    isUndefined: function(v) {
-        return v === undefined;
-    },
-    /**
-     * Returns "true" if a value is defined
-     * @param {*} v A value
-     * @returns {Boolean}
-     */
-    isDefined: function(v) {
-        return v !== undefined;
-    }
-};
+function isNull(v) {
+    return v === null;
+}
+
+/**
+ * Returns "true" if a value is undefined
+ * @param {*} v A value
+ * @returns {Boolean}
+ */
+function isUndefined(v) {
+    return v === undefined;
+}
+
+/**
+ * Returns "true" if a value is defined
+ * @param {*} v A value
+ * @returns {Boolean}
+ */
+function isDefined(v) {
+    return v !== undefined;
+}

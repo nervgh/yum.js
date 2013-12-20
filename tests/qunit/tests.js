@@ -1,5 +1,10 @@
 module('Number')
 
+    test('isNaN', function() {
+        ok(Number.isNaN(NaN) === true, 'Number.isNaN(NaN) === true');
+        ok(Number.isNaN(1.2) === false, 'Number.isNaN(1.2) === false');
+    });
+
     test('isNumber', function() {
         ok(Number.isNumber("") === false, 'Number.isNumber("") === false');
         ok(Number.isNumber(0) === true, 'Number.isNumber(0) === true');
@@ -36,9 +41,7 @@ module('Number')
         ok(Number.isEven(64) === true, 'Number.isEven(64) === true');
     });
 
-
 // -------------------
-
 
 module('Math')
 
@@ -52,9 +55,7 @@ module('Math')
         ok(Math.lcm(234, 1080) === 14040, 'Math.lcm(234, 1080) === 14040');
     });
 
-
 // -------------------
-
 
 module('Object')
 
@@ -111,12 +112,9 @@ module('Object')
         ok(JSON.stringify(clone4) === JSON.stringify(arr2), 'JSON.stringify(clone4) === JSON.stringify(arr2)');
     });
 
-
 // -------------------
 
-
 module('Boolean')
-
 
     test('isBoolean', function() {
         ok(Boolean.isBoolean("") === false, 'Boolean.isBoolean("") === false');
@@ -134,12 +132,9 @@ module('Boolean')
         ok(Boolean.isBoolean(function(){}) === false, 'Boolean.isBoolean(function(){}) === false');
     });
 
-
 // -------------------
 
-
 module('String')
-
 
     test('isString', function() {
         ok(String.isString("") === true, 'String.isString("") === true');
@@ -157,12 +152,9 @@ module('String')
         ok(String.isString(function(){}) === false, 'String.isString(function(){}) === false');
     });
 
-
 // -------------------
 
-
 module('Function')
-
 
     test('isFunction', function() {
         ok(Function.isFunction("") === false, 'Function.isFunction("") === false');
@@ -180,12 +172,9 @@ module('Function')
         ok(Function.isFunction(function(){}) === true, 'Function.isFunction(function(){}) === true');
     });
     
-    
 // -------------------
 
-
 module('Date')
-
 
     test('isDate', function() {
         ok(Date.isDate("") === false, 'Date.isDate("") === false');
@@ -203,12 +192,9 @@ module('Date')
         ok(Date.isDate(function(){}) === false, 'Date.isDate(function(){}) === false');
     });
 
-
 // -------------------
 
-
 module('RegExp')
-    
     
     test('isRegExp', function() {
         ok(RegExp.isRegExp("") === false, 'RegExp.isRegExp("") === false');
@@ -226,12 +212,9 @@ module('RegExp')
         ok(RegExp.isRegExp(function(){}) === false, 'RegExp.isRegExp(function(){}) === false');
     });
 
-
 // -------------------
 
-
 module('Array')
-
 
     test('isArray', function() {
         ok(Array.isArray("") === false, 'Array.isArray("") === false');
@@ -249,48 +232,38 @@ module('Array')
         ok(Array.isArray(function(){}) === false, 'Array.isArray(function(){}) === false');
     });
 
-
 // -------------------
 
-
-module('Null')
-
+module('Functions')
 
     test('isNull', function() {
-        ok(Null.isNull("") === false, 'Null.isNull("") === false');
-        ok(Null.isNull(0) === false, 'Null.isNull(0) === false');
-        ok(Null.isNull(false) === false, 'Null.isNull(false) === false');
-        ok(Null.isNull(NaN) === false, 'Null.isNull(NaN) === false');
-        ok(Null.isNull(Infinity) === false, 'Null.isNull(Infinity) === false');
-        ok(Null.isNull(null) === true, 'Null.isNull(null) === true');
-        ok(Null.isNull(undefined) === false, 'Null.isNull(undefined) === false');
-        ok(Null.isNull({}) === false, 'Null.isNull({}) === false');
-        ok(Null.isNull([]) === false, 'Null.isNull([]) === false');
-        ok(Null.isNull(new Date()) === false, 'Null.isNull(new Date()) === false');
-        ok(Null.isNull(/test/) === false, 'Null.isNull(/test/) === false');
-        ok(Null.isNull(12.301) === false, 'Null.isNull(12.301) === false');
-        ok(Null.isNull(function(){}) === false, 'Null.isNull(function(){}) === false');
+        ok(isNull("") === false, 'isNull("") === false');
+        ok(isNull(0) === false, 'isNull(0) === false');
+        ok(isNull(false) === false, 'isNull(false) === false');
+        ok(isNull(NaN) === false, 'isNull(NaN) === false');
+        ok(isNull(Infinity) === false, 'isNull(Infinity) === false');
+        ok(isNull(null) === true, 'isNull(null) === true');
+        ok(isNull(undefined) === false, 'isNull(undefined) === false');
+        ok(isNull({}) === false, 'isNull({}) === false');
+        ok(isNull([]) === false, 'isNull([]) === false');
+        ok(isNull(new Date()) === false, 'isNull(new Date()) === false');
+        ok(isNull(/test/) === false, 'isNull(/test/) === false');
+        ok(isNull(12.301) === false, 'isNull(12.301) === false');
+        ok(isNull(function(){}) === false, 'isNull(function(){}) === false');
     });
 
-
-// -------------------
-
-
-module('Undefined')
-
-
     test('isUndefined', function() {
-        ok(Undefined.isUndefined("") === false, 'Undefined.isUndefined("") === false');
-        ok(Undefined.isUndefined(0) === false, 'Undefined.isUndefined(0) === false');
-        ok(Undefined.isUndefined(false) === false, 'Undefined.isUndefined(false) === false');
-        ok(Undefined.isUndefined(NaN) === false, 'Undefined.isUndefined(NaN) === false');
-        ok(Undefined.isUndefined(Infinity) === false, 'Undefined.isUndefined(Infinity) === false');
-        ok(Undefined.isUndefined(null) === false, 'Undefined.isUndefined(null) === false');
-        ok(Undefined.isUndefined(undefined) === true, 'Undefined.isUndefined(undefined) === true');
-        ok(Undefined.isUndefined({}) === false, 'Undefined.isUndefined({}) === false');
-        ok(Undefined.isUndefined([]) === false, 'Undefined.isUndefined([]) === false');
-        ok(Undefined.isUndefined(new Date()) === false, 'Undefined.isUndefined(new Date()) === false');
-        ok(Undefined.isUndefined(/test/) === false, 'Undefined.isUndefined(/test/) === false');
-        ok(Undefined.isUndefined(12.301) === false, 'Undefined.isUndefined(12.301) === false');
-        ok(Undefined.isUndefined(function(){}) === false, 'Undefined.isUndefined(function(){}) === false');
+        ok(isUndefined("") === false, 'isUndefined("") === false');
+        ok(isUndefined(0) === false, 'isUndefined(0) === false');
+        ok(isUndefined(false) === false, 'isUndefined(false) === false');
+        ok(isUndefined(NaN) === false, 'isUndefined(NaN) === false');
+        ok(isUndefined(Infinity) === false, 'isUndefined(Infinity) === false');
+        ok(isUndefined(null) === false, 'isUndefined(null) === false');
+        ok(isUndefined(undefined) === true, 'isUndefined(undefined) === true');
+        ok(isUndefined({}) === false, 'isUndefined({}) === false');
+        ok(isUndefined([]) === false, 'isUndefined([]) === false');
+        ok(isUndefined(new Date()) === false, 'isUndefined(new Date()) === false');
+        ok(isUndefined(/test/) === false, 'isUndefined(/test/) === false');
+        ok(isUndefined(12.301) === false, 'isUndefined(12.301) === false');
+        ok(isUndefined(function(){}) === false, 'isUndefined(function(){}) === false');
     });
