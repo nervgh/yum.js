@@ -75,6 +75,33 @@ module('Object')
         ok(Object.isObject(function(){}) === false, 'Object.isObject(function(){}) === false');
     });
 
+    test('isEqual', function() {
+        ok(Object.isEqual('', ''), ' "" === "" ');
+        ok(Object.isEqual(0, -0), '0 === -0');
+        ok(Object.isEqual(false, false), 'false === false');
+        ok(Object.isEqual(NaN, NaN), 'NaN === NaN');
+        ok(Object.isEqual(Infinity, Infinity), 'Infinity === Infinity');
+        ok(Object.isEqual(null, null), 'null === null');
+        ok(Object.isEqual(undefined, undefined), 'undefined === undefined');
+        ok(Object.isEqual({}, {}), 'Object.isEqual({}, {})');
+        ok(Object.isEqual([], []), 'Object.isEqual([], [])');
+        ok(Object.isEqual(new Date(), new Date()), 'Object.isEqual(new Date(), new Date())');
+        ok(Object.isEqual(/test/gim, /test/mig), 'Object.isEqual(/test/gim, /test/mig)');
+        ok(Object.isEqual(function(){}, function(){}), 'Object.isEqual(function(){}, function(){})');
+        ok(Object.isEqual(
+            [1, 2, 3, 'foo', true, NaN, null, undefined, new Date(), /bar/img, document.createElement],
+            [1, 2, 3, 'foo', true, NaN, null, undefined, new Date(), /bar/mig, document.createElement]
+        ), 'Object.isEqual([1, 2, 3, "foo", true, NaN, null, undefined, new Date(), /bar/img, document.createElement], ...');
+        ok(Object.isEqual(
+            { a: NaN, b: null, c: false, d: new Date(), e: /foo/igm, f: {b:2, a:1}, j: document, i: [{c:7}], k: isNaN, l: 'bar', m: undefined },
+            {m: undefined, l: 'bar', k: isNaN, i: [{c:7}], j: document, f:{a:1, b:2}, e: /foo/igm, d: new Date(), c: false, b: null, a: NaN }
+        ), '{ a: NaN, b: null, c: false, d: new Date(), e: /foo/igm, f: {b: 2, a: 1}, j: document, i: [{c: 7}], k: isNaN, l: "bar", m: undefined }');
+        ok(Object.isEqual({a:1, b:2}, {a:1}) === false, 'Object.isEqual({a:1, b: 2}, {a: 1}) === false');
+        ok(Object.isEqual(document, {a:1}) === false, 'Object.isEqual(document, {a:1}) === false');
+        ok(Object.isEqual([], {}) === false, 'Object.isEqual([], {}) === false');
+        ok(Object.isEqual([1], []) === false, 'Object.isEqual([1], []) === false');
+    });
+
     test('clone', function() {
         var obj1 = {
             a: 1,
@@ -86,8 +113,7 @@ module('Object')
             g: new Date(),
             h: {},
             i: [],
-            j: function() {
-            }
+            j: function() {}
         };
         var obj2 = {
             a: obj1,
@@ -96,6 +122,7 @@ module('Object')
                 obj1
             ]
         };
+
         var clone1 = Object.clone(obj1);
         var clone2 = Object.clone(obj2);
 
@@ -266,4 +293,38 @@ module('Functions')
         ok(isUndefined(/test/) === false, 'isUndefined(/test/) === false');
         ok(isUndefined(12.301) === false, 'isUndefined(12.301) === false');
         ok(isUndefined(function(){}) === false, 'isUndefined(function(){}) === false');
+    });
+
+    test('isPrimitive', function() {
+        ok(isPrimitive("") === true, 'isPrimitive("") === true');
+        ok(isPrimitive(0) === true, 'isPrimitive(0) === true');
+        ok(isPrimitive(12.301) === true, 'isPrimitive(12.301) === true');
+        ok(isPrimitive(false) === true, 'isPrimitive(false) === true');
+        ok(isPrimitive(NaN) === true, 'isPrimitive(NaN) === true');
+        ok(isPrimitive(Infinity) === true, 'isPrimitive(Infinity) === true');
+        ok(isPrimitive(null) === true, 'isPrimitive(null) === true');
+        ok(isPrimitive(undefined) === true, 'isPrimitive(undefined) === true');
+        ok(isPrimitive({}) === false, 'isPrimitive({}) === false');
+        ok(isPrimitive([]) === false, 'isPrimitive([]) === false');
+        ok(isPrimitive(new Date()) === false, 'isPrimitive(new Date()) === false');
+        ok(isPrimitive(/test/) === false, 'isPrimitive(/test/) === false');
+        ok(isPrimitive(function(){}) === false, 'isPrimitive(function(){}) === false');
+    });
+
+    test('isElement', function() {
+        ok(isElement("") === false, 'isElement("") === false');
+        ok(isElement(0) === false, 'isElement(0) === false');
+        ok(isElement(12.301) === false, 'isElement(12.301) === false');
+        ok(isElement(false) === false, 'isElement(false) === false');
+        ok(isElement(NaN) === false, 'isElement(NaN) === false');
+        ok(isElement(Infinity) === false, 'isElement(Infinity) === false');
+        ok(isElement(null) === false, 'isElement(null) === false');
+        ok(isElement(undefined) === false, 'isElement(undefined) === false');
+        ok(isElement({}) === false, 'isElement({}) === false');
+        ok(isElement([]) === false, 'isElement([]) === false');
+        ok(isElement(new Date()) === false, 'isElement(new Date()) === false');
+        ok(isElement(/test/) === false, 'isElement(/test/) === false');
+        ok(isElement(function(){}) === false, 'isElement(function(){}) === false');
+        ok(isElement(document), 'isElement(document)');
+        ok(isElement(document.body), 'isElement(document.body)');
     });

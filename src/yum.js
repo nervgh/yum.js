@@ -5,7 +5,7 @@
  * Extends global constructors useful methods
  *
  * @author: https://github.com/nervgh
- * @version: 0.1.1, 2013-12-20
+ * @version: 0.1.2, 2013-12-20
  */
 
 
@@ -135,14 +135,58 @@ Object.isObject = function(v) {
 };
 
 /**
+ * Compares parameters by value
+ * https://github.com/angular/angular.js/blob/master/src/Angular.js
+ * @param {*} a A value
+ * @param {*} b A value
+ * @return {Boolean}
+ */
+Object.isEqual = function(a, b) {
+    if (a === b) return true; // Number, String, Boolean, null, undefined, objects by link
+    if (a !== a && b !== b) return true; // NaN === NaN
+    var t1 = Object.toString.call(a), t2 = Object.toString.call(b), t, i, len, key, hash;
+    if (t1 !== t2) return false;
+    t = t1.slice(8, -1);
+    switch(t) {
+        case 'Function': return a.toString() === b.toString();
+        case 'Date': return a.getTime() === b.getTime();
+        case 'RegExp': return a.toString() === b.toString();
+        case 'Array':
+            if ((len = a.length) !== b.length) return false;
+            for(i = 0; i < len; i++) {
+                if (!this.isEqual(a[i], b[i])) return false;
+            }
+            return true;
+        case 'Object':
+            hash = {};
+            for(key in a) {
+                if (!a.hasOwnProperty(key)) continue;
+                if (key in b && b.hasOwnProperty(key)) {
+                    if (!this.isEqual(a[key],b[key])) return false;
+                } else {
+                    return false;
+                }
+                hash[key] = true;
+            }
+            for(key in b) {
+                if (!b.hasOwnProperty(key)) continue;
+                if (!hash[key]) return false;
+            }
+            return true;
+    }
+    return false;
+};
+
+/**
  * Creates clone of object
+ * Not working with DOM elements
  * http://stackoverflow.com/a/728694
  * https://github.com/andrewplummer/Sugar/blob/master/lib/object.js#L328
  * @param {Object} obj
  * @return {Object}
  */
 Object.clone = function(obj) {
-    // Number, String, Boolean, null, undefined
+    // Number, String, Boolean, Function, null, undefined
     if (null === obj || 'object' !== typeof obj) {
         return obj;
     }
@@ -259,6 +303,17 @@ Array.isArray = Array.isArray || function(v) {
  */
 
 /**
+ * Returns "true" if a value is primitive
+ * @param {*} v A value
+ * @returns {Boolean}
+ */
+function isPrimitive(v) {
+    if (null === v) return true;
+    var t = typeof v;
+    return 'object' !== t && 'function' !== t;
+}
+
+/**
  * Returns "true" if a value is null
  * @param {*} v A value
  * @returns {Boolean}
@@ -283,4 +338,13 @@ function isUndefined(v) {
  */
 function isDefined(v) {
     return v !== undefined;
+}
+
+/**
+* Returns "true" if a value is a DOM element
+* @param {*} v A value
+* @returns {Boolean}
+*/
+function isElement(v) {
+    return Object.toString.call(v).slice(8, 12) === 'HTML';
 }
