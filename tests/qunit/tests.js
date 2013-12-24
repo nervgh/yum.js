@@ -137,6 +137,13 @@ module('Object')
 
         ok(JSON.stringify(clone3) === JSON.stringify(arr1), 'JSON.stringify(clone3) === JSON.stringify(arr1)');
         ok(JSON.stringify(clone4) === JSON.stringify(arr2), 'JSON.stringify(clone4) === JSON.stringify(arr2)');
+
+        function Foo() {this.prop = obj1;}
+        var obj3 = new Foo();
+        var clone5 = Object.clone(obj3);
+
+        ok(JSON.stringify(clone5) === JSON.stringify(obj3), 'JSON.stringify(clone5) === JSON.stringify(obj3)');
+        ok(clone5 instanceof Foo, 'Supporting inheritance');
     });
 
 // -------------------

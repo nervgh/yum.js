@@ -5,7 +5,7 @@
  * Extends global constructors useful methods
  *
  * @author: https://github.com/nervgh
- * @version: 0.1.2, 2013-12-20
+ * @version: 0.1.3, 2013-12-24
  */
 
 
@@ -196,7 +196,7 @@ Object.clone = function(obj) {
         return new obj.constructor(obj);
         // Array and Object
     } else {
-        var copy = Array.isArray(obj) ? [] : {};
+        var copy = Array.isArray(obj) ? [] : Object.create(Object.getPrototypeOf(obj));
         for (var key in obj) {
             if (obj.hasOwnProperty(key)) {
                 copy[key] = this.clone(obj[key]);
