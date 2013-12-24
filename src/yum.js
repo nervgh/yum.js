@@ -194,12 +194,17 @@ Object.clone = function(obj) {
     // Date and RegExp
     if (Date.isDate(obj) || RegExp.isRegExp(obj)) {
         return new obj.constructor(obj);
-        // Array and Object
+    // Array and Object
     } else {
         var copy = Array.isArray(obj) ? [] : Object.create(Object.getPrototypeOf(obj));
         for (var key in obj) {
             if (obj.hasOwnProperty(key)) {
-                copy[key] = this.clone(obj[key]);
+                var descriptor = Object.getOwnPropertyDescriptor(obj, key);
+                if (descriptor) {
+                    Object.defineProperty(copy, key, descriptor);
+                } else {
+                    copy[key] = this.clone(obj[key]);
+                }
             }
         }
         return copy;

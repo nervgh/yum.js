@@ -122,7 +122,6 @@ module('Object')
                 obj1
             ]
         };
-
         var clone1 = Object.clone(obj1);
         var clone2 = Object.clone(obj2);
 
@@ -131,7 +130,6 @@ module('Object')
 
         var arr1 = [1, 2, 3, obj1];
         var arr2 = [arr1, obj2];
-
         var clone3 = Object.clone(arr1);
         var clone4 = Object.clone(arr2);
 
@@ -142,8 +140,16 @@ module('Object')
         var obj3 = new Foo();
         var clone5 = Object.clone(obj3);
 
-        ok(JSON.stringify(clone5) === JSON.stringify(obj3), 'JSON.stringify(clone5) === JSON.stringify(obj3)');
         ok(clone5 instanceof Foo, 'Supporting inheritance');
+
+        var obj4 = {};
+        Object.defineProperty(obj4, 'prop', {value: obj2, enumerable: true});
+        var clone6 = Object.clone(obj4);
+
+        ok(Object.isEqual(
+            Object.getOwnPropertyDescriptor(obj4, 'prop'),
+            Object.getOwnPropertyDescriptor(clone6, 'prop')
+        ), 'Cloning with descriptors');
     });
 
 // -------------------
