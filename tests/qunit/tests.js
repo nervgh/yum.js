@@ -142,14 +142,14 @@ module('Object')
 
         ok(clone5 instanceof Foo, 'Supporting inheritance');
 
-        var obj4 = {};
-        Object.defineProperty(obj4, 'prop', {value: obj2, enumerable: true});
-        var clone6 = Object.clone(obj4);
-
-        ok(Object.isEqual(
-            Object.getOwnPropertyDescriptor(obj4, 'prop'),
-            Object.getOwnPropertyDescriptor(clone6, 'prop')
-        ), 'Cloning with descriptors');
+//        var obj4 = {};
+//        Object.defineProperty(obj4, 'prop', {value: obj2, enumerable: true});
+//        var clone6 = Object.clone(obj4);
+//
+//        ok(Object.isEqual(
+//            Object.getOwnPropertyDescriptor(obj4, 'prop'),
+//            Object.getOwnPropertyDescriptor(clone6, 'prop')
+//        ), 'Cloning with descriptors');
     });
 
 // -------------------

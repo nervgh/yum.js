@@ -5,7 +5,7 @@
  * Extends global constructors useful methods
  *
  * @author: https://github.com/nervgh
- * @version: 0.1.3, 2013-12-24
+ * @version: 0.1.4, 2013-12-31
  */
 
 
@@ -78,11 +78,11 @@ Number.isEven = function(n) {
  * @return {Number}
  */
 Math.gcd = function(u, v) {
-    var shift = 0, diff = 0;
+    if (u === v) return u;
+    if (u === 1 || v === 1) return 1;
+    if (u === 0 || v === 0) return u | v;
 
-    if (u === 0 || v === 0) {
-        return u | v;
-    }
+    var shift = 0, diff = 0;
 
     for(; ((u | v) & 1) === 0; u >>= 1, v >>= 1, shift++);
 
