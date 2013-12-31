@@ -152,6 +152,25 @@ module('Object')
 //        ), 'Cloning with descriptors');
     });
 
+
+    test('assign', function() {
+        var obj1 = {
+            a: 1,
+            b: null,
+            c: 'string',
+            d: NaN,
+            e: undefined,
+            f: /[a-z]/gim,
+            g: new Date(),
+            h: {},
+            i: [],
+            j: function() {}
+        };
+        var obj2 = Object.assign({}, obj1);
+        ok(Object.isEqual(obj1, obj2), 'Object.isEqual(obj1, obj2)');
+    });
+
+
 // -------------------
 
 module('Boolean')

@@ -199,16 +199,26 @@ Object.clone = function(obj) {
         var copy = Array.isArray(obj) ? [] : Object.create(Object.getPrototypeOf(obj));
         for (var key in obj) {
             if (obj.hasOwnProperty(key)) {
-                var descriptor = Object.getOwnPropertyDescriptor(obj, key);
-                if (descriptor) {
-                    Object.defineProperty(copy, key, descriptor);
-                } else {
-                    copy[key] = this.clone(obj[key]);
-                }
+                copy[key] = this.clone(obj[key]);
             }
         }
         return copy;
     }
+};
+
+/**
+ * Copy the values of all of the enumerable own properties from a source object to a target object
+ * @param {Object} target
+ * @param {Object} source
+ * @return {Object}
+ */
+Object.assign = Object.assign || function(target, source) {
+    for(var key in source) {
+        if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+        }
+    }
+    return target;
 };
 
 
