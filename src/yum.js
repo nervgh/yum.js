@@ -5,7 +5,7 @@
  * Extends global constructors useful methods
  *
  * @author: https://github.com/nervgh
- * @version: 0.1.4, 2013-12-31
+ * @version: 0.1.5, 2014-03-11
  */
 
 
@@ -73,45 +73,46 @@ Number.isEven = function(n) {
 
 /**
  * Returns Greatest Common Divisor
- * @param {Number} u A positive integer number
- * @param {Number} v A positive integer number
+ * @param {Number} a A positive integer number
+ * @param {Number} b A positive integer number
+ * @param {...Number} [n] A positive integer number
  * @return {Number}
+ * http://nayuki.eigenstate.org/page/calculate-gcd-javascript
  */
-Math.gcd = function(u, v) {
-    if (u === v) return u;
-    if (u === 1 || v === 1) return 1;
-    if (u === 0 || v === 0) return u | v;
+Math.gcd = function() {
+    var i = arguments.length;
+    var a = arguments[--i];
 
-    var shift = 0, diff = 0;
+    while(a && i) {
+        var b = arguments[--i];
 
-    for(; ((u | v) & 1) === 0; u >>= 1, v >>= 1, shift++);
-
-    for(; (u & 1) === 0; u >>= 1);
-
-    do {
-        for(; (v & 1) === 0; v >>= 1);
-
-        if (u < v) {
-            v -= u;
-        } else {
-            diff = u - v;
-            u = v;
-            v = diff;
+        while(b) {
+            var c = a % b;
+            a = b;
+            b = c;
         }
+    }
 
-    } while (v !== 0);
-
-    return u << shift;
+    return a;
 };
 
 /**
  * Returns Least Common Multiple
- * @param {Number} u A positive integer number
- * @param {Number} v A positive integer number
+ * @param {Number} a A positive integer number
+ * @param {Number} b A positive integer number
+ * @param {...Number} [n] A positive integer number
  * @return {Number}
  */
-Math.lcm = function(u, v) {
-    return u * v / Math.gcd(u, v);
+Math.lcm = function() {
+    var i = arguments.length;
+    var a = arguments[--i];
+
+    while(a && i) {
+        var b = arguments[--i];
+        a = a * b / Math.gcd(a, b);
+    }
+
+    return a;
 };
 
 
