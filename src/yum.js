@@ -5,7 +5,7 @@
  * Extends global constructors useful methods
  *
  * @author: https://github.com/nervgh
- * @version: 0.1.5, 2014-03-11
+ * @version: 0.1.6, 2014-03-11
  */
 
 
@@ -137,45 +137,14 @@ Object.isObject = function(v) {
 
 /**
  * Compares parameters by value
- * https://github.com/angular/angular.js/blob/master/src/Angular.js
+ * Objects with circular references not supported
  * @param {*} a A value
  * @param {*} b A value
  * @return {Boolean}
  */
 Object.isEqual = function(a, b) {
     if (a === b) return true; // Number, String, Boolean, null, undefined, objects by link
-    if (a !== a && b !== b) return true; // NaN === NaN
-    var t1 = Object.toString.call(a), t2 = Object.toString.call(b), t, i, len, key, hash;
-    if (t1 !== t2) return false;
-    t = t1.slice(8, -1);
-    switch(t) {
-        case 'Function': return a.toString() === b.toString();
-        case 'Date': return a.getTime() === b.getTime();
-        case 'RegExp': return a.toString() === b.toString();
-        case 'Array':
-            if ((len = a.length) !== b.length) return false;
-            for(i = 0; i < len; i++) {
-                if (!this.isEqual(a[i], b[i])) return false;
-            }
-            return true;
-        case 'Object':
-            hash = {};
-            for(key in a) {
-                if (!a.hasOwnProperty(key)) continue;
-                if (key in b && b.hasOwnProperty(key)) {
-                    if (!this.isEqual(a[key],b[key])) return false;
-                } else {
-                    return false;
-                }
-                hash[key] = true;
-            }
-            for(key in b) {
-                if (!b.hasOwnProperty(key)) continue;
-                if (!hash[key]) return false;
-            }
-            return true;
-    }
-    return false;
+    return JSON.stringify(a) === JSON.stringify(b);
 };
 
 /**
