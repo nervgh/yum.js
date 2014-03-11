@@ -171,6 +171,31 @@ module('Object')
     });
 
 
+    test('inherit', function() {
+        function Foo() {
+            var descriptor = Object.clone(Foo.descriptor);
+            Object.defineProperties(this, descriptor);
+        }
+        Foo.descriptor = {
+            prop: {
+                value: 'test'
+            }
+        };
+        function Bar() {
+            Bar.super_.apply(this, arguments);
+        }
+
+        Object.inherit(Bar, Foo);
+
+        var obj = new Bar();
+
+        ok(Bar.super_ === Foo, 'Bar.super_ === Foo');
+        ok(obj instanceof Foo, 'obj instanceof Foo');
+        ok(obj.constructor === Bar, 'obj.constructor === Bar');
+        ok(obj.prop === 'test', 'obj.prop === "test"');
+    })
+
+
 // -------------------
 
 module('Boolean')

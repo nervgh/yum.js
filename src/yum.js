@@ -5,21 +5,18 @@
  * Extends global constructors useful methods
  *
  * @author: https://github.com/nervgh
- * @version: 0.1.6, 2014-03-11
+ * @version: 0.2.0, 2014-03-11
  */
-
 
 
 /**
  * THE NUMBER
  */
-
 /**
  * Returns "true" if a value is NaN
 * @borrows global.isNaN as isNaN
  */
 Number.isNaN = Number.isNaN || this.isNaN;
-
 /**
  * Returns "true" if a value is number
  * @param {*} v A value
@@ -28,7 +25,6 @@ Number.isNaN = Number.isNaN || this.isNaN;
 Number.isNumber = function(v) {
     return typeof v === 'number' && !this.isNaN(v);
 };
-
 /**
  * Returns "true" if a number is integer
  * @param {Number} n A number
@@ -37,7 +33,6 @@ Number.isNumber = function(v) {
 Number.isInteger = Number.isInteger || function(n) {
     return (n | 0) === n;
 };
-
 /**
  * Returns "true" if a number is float
  * @param {Number} n A number
@@ -46,7 +41,6 @@ Number.isInteger = Number.isInteger || function(n) {
 Number.isFloat = function(n) {
     return (n | 0) !== n;
 };
-
 /**
  * Returns "true" if a number is odd
  * @param {Number} n A integer number
@@ -55,7 +49,6 @@ Number.isFloat = function(n) {
 Number.isOdd = function(n) {
     return (n & 1) !== 0;
 };
-
 /**
  * Returns "true" if a number is even
  * @param {Number} n A integer number
@@ -66,11 +59,9 @@ Number.isEven = function(n) {
 };
 
 
-
 /**
  * THE MATH
  */
-
 /**
  * Returns Greatest Common Divisor
  * @param {Number} a A positive integer number
@@ -95,7 +86,6 @@ Math.gcd = function() {
 
     return a;
 };
-
 /**
  * Returns Least Common Multiple
  * @param {Number} a A positive integer number
@@ -116,16 +106,13 @@ Math.lcm = function() {
 };
 
 
-
 /**
  * THE OBJECT
  */
-
 /**
  * @borrows toString as toString
  */
 Object.toString = Object.prototype.toString;
-
 /**
  * Returns "true" if a value is object
  * @param {*} v A value
@@ -134,7 +121,6 @@ Object.toString = Object.prototype.toString;
 Object.isObject = function(v) {
     return Object.toString.call(v) === '[object Object]';
 };
-
 /**
  * Compares parameters by value
  * Objects with circular references not supported
@@ -146,7 +132,6 @@ Object.isEqual = function(a, b) {
     if (a === b) return true; // Number, String, Boolean, null, undefined, objects by link
     return JSON.stringify(a) === JSON.stringify(b);
 };
-
 /**
  * Creates clone of object
  * Not working with DOM elements
@@ -175,7 +160,6 @@ Object.clone = function(obj) {
         return copy;
     }
 };
-
 /**
  * Copy the values of all of the enumerable own properties from a source object to a target object
  * @param {Object} target
@@ -190,13 +174,28 @@ Object.assign = Object.assign || function(target, source) {
     }
     return target;
 };
-
+/**
+ * Inherits a target (Class_1) by a source (Class_2)
+ * @param {Function} target
+ * @param {Function} source
+ */
+Object.inherit = function(target, source) {
+    target.super_ = source;
+    target.prototype = Object.create(target.super_.prototype);
+    var descriptor = Object.clone(target.super_.descriptor) || {};
+    descriptor.constructor = {
+        value: target,
+        enumerable: false,
+        writable: true,
+        configurable: true
+    };
+    Object.defineProperties(target.prototype, descriptor);
+};
 
 
 /**
  * THE BOOLEAN
  */
-
 /**
  * Returns "true" if a value is boolean
  * @param {*} v A value
@@ -207,11 +206,9 @@ Boolean.isBoolean = function(v) {
 };
 
 
-
 /**
  * THE STRING
  */
-
 /**
  * Returns "true" if a value is string
  * @param {*} v A value
@@ -222,11 +219,9 @@ String.isString = function(v) {
 };
 
 
-
 /**
  * THE FUNCTION
  */
-
 /**
  * Returns "true" if a value is function
  * @param {*} v A value
@@ -237,11 +232,9 @@ Function.isFunction = function(v) {
 };
 
 
-
 /**
  * THE DATE
  */
-
 /**
  * Returns "true" if a value is date
  * @param {*} v A value
@@ -252,11 +245,9 @@ Date.isDate = function(v) {
 };
 
 
-
 /**
  * THE REGEXP
  */
-
 /**
  * Returns "true" if a value is regular expression
  * @param {*} v A value
@@ -267,11 +258,9 @@ RegExp.isRegExp = function(v) {
 };
 
 
-
 /**
  * THE ARRAY
  */
-
 /**
  * Returns "true" if a value is array
  * @param {*} v A value
@@ -282,11 +271,9 @@ Array.isArray = Array.isArray || function(v) {
 };
 
 
-
 /**
  * FUNCTIONS
  */
-
 /**
  * Returns "true" if a value is primitive
  * @param {*} v A value
@@ -297,7 +284,6 @@ function isPrimitive(v) {
     var t = typeof v;
     return 'object' !== t && 'function' !== t;
 }
-
 /**
  * Returns "true" if a value is null
  * @param {*} v A value
@@ -306,7 +292,6 @@ function isPrimitive(v) {
 function isNull(v) {
     return v === null;
 }
-
 /**
  * Returns "true" if a value is undefined
  * @param {*} v A value
@@ -315,7 +300,6 @@ function isNull(v) {
 function isUndefined(v) {
     return v === undefined;
 }
-
 /**
  * Returns "true" if a value is defined
  * @param {*} v A value
@@ -324,7 +308,6 @@ function isUndefined(v) {
 function isDefined(v) {
     return v !== undefined;
 }
-
 /**
 * Returns "true" if a value is a DOM element
 * @param {*} v A value
